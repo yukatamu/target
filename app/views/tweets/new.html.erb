@@ -1,0 +1,40 @@
+<h1>目標</h1>
+<h3>新規投稿ページ</h3>
+<%= form_for @tweet do |f| %>
+  <div class='form-group'>
+  <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+      <div class='form-check'>
+          <%= tag.label class: 'form-check-label' do %>
+              <%= tag.check_box class: 'form-check-input' %>
+              <%= tag.text %>
+          <% end %>
+      </div>
+  <% end %>
+</div>
+  <div class="zentai">
+
+    <div class="fielda">
+      <%= f.label :目標を一言で！ %>
+      <%= f.text_field :target, :size => 30 %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :目標を具体的に！ %>
+      <%= f.text_area :about, :size => "30x2" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :画像 %>
+      <%= f.file_field :image, :size => 30 %>
+    </div>
+    
+    <div class="field">
+      <%= f.label :達成目標日 %>
+      <%= f.text_field :deadline, :size => 30 %>
+    </div>
+  </div>
+
+  <%= f.submit "投稿する" %>
+  <% end %>
+  
+  <%= link_to "一覧に戻る", tweets_path %>

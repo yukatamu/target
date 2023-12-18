@@ -1,0 +1,53 @@
+<%= stylesheet_link_tag 'index', :media => "all" %>
+
+<div class="tweets-container">
+<h1>一覧ページ</h1>
+<h3>投稿を検索</h3>
+ <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
+   <%= text_field_tag :search %>
+   <%= submit_tag '検索する'  %>
+<% end %>
+<% if user_signed_in? %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+<% end %>
+<%= link_to "新規投稿へ", new_tweet_path %>
+<%= button_to 'ログアウト', destroy_user_session_path, method: :delete %>
+<%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
+  <% Tag.all.each do |t| %>
+      <li><%= check_box :tag_ids, t.name %><%= t.name %></li>
+  <% end %>
+  <%= submit_tag '検索' %>
+<% end %>
+
+<div class="tweets-container">
+  <% @tweets.each do |t| %>
+    <div class="tweet">
+ 
+    <%= image_tag t.image_url, size: "250x200" if t.image? %>
+      <%= t.target %>
+      <%= t.about %>
+      <%= t.image %>
+      <%= t.deadline %>
+      <%= link_to t.user.name, user_path(t.user_id) %>  
+      <% if user_signed_in? %>
+      <% if current_user.already_liked?(t) %>
+          <%= link_to tweet_like_path(id: t.id, tweet_id: t.id), method: :delete do %>
+            <i class="fas fa-heart"style="color:red;"></i><%= t.likes.count %>
+          <% end %>
+      <% else %>
+          <%= button_to tweet_likes_path(id: t.id, tweet_id: t.id), method: :post do %>
+            <i class="far fa-heart"style="color:red;"></i><%= t.likes.count %>
+          <% end %>
+      <% end %>
+  <% else %>
+      <p>いいねの数 = </p><%= t.likes.count %>
+  <% end %>
+    </div>
+    <%= link_to "詳細へ", tweet_path(t.id) %>
+  <% end %>
+  <%= form_tag({controller:"tweets",action:"index"}, method: :get) do %>
+    <%= text_field_tag :tag %>
+    <%= submit_tag 'タグを追加' %>
+<% end %>
+
+</div>

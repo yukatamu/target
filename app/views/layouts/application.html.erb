@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Target</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/f4756d131d.js" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    
+  </head>
+
+<body>
+  <header>
+  <h1>目標を投稿するサイト！</h1>
+  <div class="header-list">
+  <ul>
+    <li><%= link_to "一覧に戻る", tweets_path %></li>
+    <li><%= link_to "投稿する",new_tweet_path %></li>
+    <li><%= link_to "ログイン", tweets_path %></li>
+    <li><%= link_to "新規登録", new_user_registration_path %></li>
+  
+  </ul>
+  </div>
+</header>
+  <main>
+    <%= yield %>
+  </main>
+ <footer>
+   <p>Copyright © GeekSalon All Rights Reserved.</p>
+ </footer>
+ </body>
+</html>
